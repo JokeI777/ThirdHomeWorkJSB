@@ -1,13 +1,15 @@
 Тема: Конфигурация и События  
   
 Считать следующую конфигурацию:  
-`app:  
+
+`  
+app:  
     first-config: 1  
     second-config:  
         subconfig: test_me  
         user: login  
         ttl: 123s  
-`
+`  
 с помощью аннотации ConfigurationProperties и EnableConfigurationProperties в класс SimpleConfig  
 
 Создать событие ConfigEvent, которое должно публиковаться после старта приложения и должно содержать в себе считанную конфигурацию  
