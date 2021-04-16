@@ -16,9 +16,9 @@ app:
 Задание конфигов должно быть в конфигурационных файлах для конкретного какого-то профиля. То есть в зависимости от выбрано профиля должны выводиться в лог разные значения  
 
 дополнение к ДЗ.  
-Необходимо сделать две реализации (DevSmsSender и ProdSmsSender) интерфейса:  
-interface SmsSender {  
+Необходимо сделать две реализации (DevSmsSender и ProdSmsSender) интерфейса: 
   
+interface SmsSender {  
     void send(String phoneNumber, String text);  
 }  
   
