@@ -40,10 +40,10 @@ public class DemoApplication {
 	@EventListener(ConfigEvent.class)
 	public void listenConfigEvent(ConfigEvent event) {
 		logger.info("first-config: " + event.simpleConfig.first_config);
-		logger.info("second-config: "+ event.simpleConfig.secondConfig);
-		logger.info("subconfig: "+ event.simpleConfig.subconfig);
-		logger.info("user: " + event.simpleConfig.user);
-		logger.info("ttl: " + event.simpleConfig.ttl);
+		logger.info("second-config: "+ event.simpleConfig.second_config);
+		logger.info("subconfig: "+ simpleConfig.second_config.subConfig);
+		logger.info("user: " + simpleConfig.second_config.user);
+		logger.info("ttl: " + simpleConfig.second_config.ttl);
 		smsSender.send("777", "Simple text");
 	}
 }
