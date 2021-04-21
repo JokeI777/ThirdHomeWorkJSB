@@ -14,16 +14,16 @@ import org.springframework.context.event.EventListener;
 public class DemoApplication {
 
 
-	public SimpleConfig simpleConfig;
-	public SmsSender smsSender;
-	public EventPublisher eventPublisher;
-	Logger logger = LoggerFactory.getLogger("apps");
+	private SimpleConfig simpleConfig;
+	private SmsSender smsSender;
+	private ApplicationEventPublisher eventPublisher;
+	static final Logger logger = LoggerFactory.getLogger("apps");
 
 
-	public DemoApplication(ApplicationEventPublisher eventPublisher, SmsSender smsSender) {
-		var publisher = new EventPublisher();
-		publisher.applicationEventPublisher = eventPublisher;
-		this.eventPublisher = publisher;
+	public DemoApplication(ApplicationEventPublisher eventPublisher, SmsSender smsSender, SimpleConfig simpleConfig) {
+		this.simpleConfig = simpleConfig;
+		this.smsSender =  smsSender;
+		this.eventPublisher = eventPublisher;
 	}
 
 	public static void main(String[] args) {
@@ -32,18 +32,16 @@ public class DemoApplication {
 
 	@EventListener(ApplicationStartedEvent.class)
 	public void publishStart(ApplicationStartedEvent event){
-		simpleConfig = event.getApplicationContext().getBean(SimpleConfig.class);
-		smsSender = event.getApplicationContext().getBean(SmsSender.class);
-		eventPublisher.publishCustomEvent(new ConfigEvent(simpleConfig));
+		eventPublisher.publishEvent(new ConfigEvent(simpleConfig));
 	}
 
 	@EventListener(ConfigEvent.class)
 	public void listenConfigEvent(ConfigEvent event) {
-		logger.info("first-config: " + event.simpleConfig.first_config);
-		logger.info("second-config: "+ event.simpleConfig.second_config);
-		logger.info("subconfig: "+ simpleConfig.second_config.subConfig);
-		logger.info("user: " + simpleConfig.second_config.user);
-		logger.info("ttl: " + simpleConfig.second_config.ttl);
+		logger.info("first-config: " + event.simpleConfig.getFirstConfig());
+		logger.info("second-config:");
+		logger.info("  subconfig: "+ event.simpleConfig.getSecondConfig().getSubConfig());
+		logger.info("  user: " + event.simpleConfig.getSecondConfig().getUser());
+		logger.info("  ttl: " + event.simpleConfig.getSecondConfig().getTtl());
 		smsSender.send("777", "Simple text");
 	}
 }

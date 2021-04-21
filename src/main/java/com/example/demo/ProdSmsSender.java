@@ -8,10 +8,9 @@ import java.util.logging.Logger;
 @Profile("!dev")
 @Component
 public class ProdSmsSender implements SmsSender{
-
+    static final Logger logger = Logger.getLogger("prodSend");
     @Override
     public void send(String phoneNumber, String text){
-        Logger logger = Logger.getLogger("prodSend");
         logger.info("Prod message");
     }
 }
